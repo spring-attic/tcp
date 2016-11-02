@@ -1,0 +1,45 @@
+//tag::ref-doc[]
+= TCP
+The `tcp` source acts as a server and allows a remote party to connect to it and submit data over a raw tcp socket.
+
+TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of decoders are
+available, the default being 'CRLF' which is compatible with Telnet.
+
+Messages produced by the TCP source application have a `byte[]` payload.
+
+== Options
+
+//tag::configuration-properties[]
+$$tcp.buffer-size$$:: $$The buffer size used when decoding messages; larger messages will be rejected.$$ *($$Integer$$, default: `$$2048$$`)*
+$$tcp.decoder$$:: $$The decoder to use when receiving messages.$$ *($$Encoding$$, default: `$$<none>$$`, possible values: `CRLF`,`LF`,`NULL`,`STXETX`,`RAW`,`L1`,`L2`,`L4`)*
+$$tcp.nio$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
+$$tcp.port$$:: $$<documentation missing>$$ *($$Integer$$, default: `$$<none>$$`)*
+$$tcp.reverse-lookup$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
+$$tcp.socket-timeout$$:: $$<documentation missing>$$ *($$Integer$$, default: `$$<none>$$`)*
+$$tcp.use-direct-buffers$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
+//end::configuration-properties[]
+
+== Available Decoders
+
+.Text Data
+
+CRLF (default):: text terminated by carriage return (0x0d) followed by line feed (0x0a)
+LF:: text terminated by line feed (0x0a)
+NULL:: text terminated by a null byte (0x00)
+STXETX:: text preceded by an STX (0x02) and terminated by an ETX (0x03)
+
+.Text and Binary Data
+
+RAW:: no structure - the client indicates a complete message by closing the socket
+L1:: data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
+L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
+L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
+
+//end::ref-doc[]
+== Build
+
+```
+$> mvn package
+```
+
+The "decoder" property determines the message format (default is termination with CRLF).
