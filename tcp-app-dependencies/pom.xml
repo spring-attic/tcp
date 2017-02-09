@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.springframework.cloud.stream.app</groupId>
-    <artifactId>tcp-app-dependencies</artifactId>
-    <version>1.1.2.BUILD-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>tcp-app-dependencies</name>
-    <description>Spring Cloud Stream TCP App Dependencies</description>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.springframework.cloud.stream.app</groupId>
+	<artifactId>tcp-app-dependencies</artifactId>
+	<version>1.1.2.BUILD-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>tcp-app-dependencies</name>
+	<description>Spring Cloud Stream TCP App Dependencies</description>
 
-    <parent>
-	<artifactId>spring-cloud-dependencies-parent</artifactId>
-        <groupId>org.springframework.cloud</groupId>
-        <version>1.2.1.RELEASE</version>
-        <relativePath />
-    </parent>
+	<parent>
+		<artifactId>spring-cloud-dependencies-parent</artifactId>
+		<groupId>org.springframework.cloud</groupId>
+		<version>1.2.1.RELEASE</version>
+		<relativePath />
+	</parent>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud.stream.app</groupId>
-                <artifactId>spring-cloud-starter-stream-source-tcp</artifactId>
-                <version>1.1.2.BUILD-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud.stream.app</groupId>
-                <artifactId>spring-cloud-starter-stream-sink-tcp</artifactId>
-                <version>1.1.2.BUILD-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud.stream.app</groupId>
-                <artifactId>spring-cloud-starter-stream-source-tcp-client</artifactId>
-                <version>1.1.2.BUILD-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud.stream.app</groupId>
-                <artifactId>spring-cloud-starter-stream-processor-tcp-client</artifactId>
-                <version>1.1.2.BUILD-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud.stream.app</groupId>
-                <artifactId>tcp-app-starters-test-support</artifactId>
-                <version>1.1.2.BUILD-SNAPSHOT</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-<profiles>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud.stream.app</groupId>
+				<artifactId>spring-cloud-starter-stream-source-tcp</artifactId>
+				<version>1.1.2.BUILD-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud.stream.app</groupId>
+				<artifactId>spring-cloud-starter-stream-sink-tcp</artifactId>
+				<version>1.1.2.BUILD-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud.stream.app</groupId>
+				<artifactId>spring-cloud-starter-stream-source-tcp-client</artifactId>
+				<version>1.1.2.BUILD-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud.stream.app</groupId>
+				<artifactId>spring-cloud-starter-stream-processor-tcp-client</artifactId>
+				<version>1.1.2.BUILD-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud.stream.app</groupId>
+				<artifactId>tcp-app-starters-test-support</artifactId>
+				<version>1.1.2.BUILD-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<profiles>
 		<profile>
 			<id>spring</id>
 			<repositories>

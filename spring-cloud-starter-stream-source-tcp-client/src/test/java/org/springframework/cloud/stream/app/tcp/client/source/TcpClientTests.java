@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,71 +22,43 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ServerSocketFactory;
-import javax.net.SocketFactory;
 
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.cloud.stream.app.tcp.client.source.TcpClientSourceConfiguration;
-import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.integration.ip.tcp.TcpOutboundGateway;
-import org.springframework.integration.ip.tcp.TcpReceivingChannelAdapter;
-import org.springframework.integration.ip.tcp.connection.AbstractClientConnectionFactory;
 import org.springframework.integration.ip.tcp.connection.AbstractConnectionFactory;
-import org.springframework.integration.ip.tcp.connection.AbstractServerConnectionFactory;
-import org.springframework.integration.ip.tcp.connection.TcpNetClientConnectionFactory;
-import org.springframework.integration.ip.tcp.connection.TcpNetServerConnectionFactory;
 import org.springframework.integration.ip.tcp.connection.TcpNioClientConnectionFactory;
-import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerializer;
-import org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer;
-import org.springframework.integration.ip.tcp.serializer.ByteArrayLengthHeaderSerializer;
 import org.springframework.integration.ip.tcp.serializer.ByteArrayLfSerializer;
-import org.springframework.integration.ip.tcp.serializer.ByteArrayRawSerializer;
-import org.springframework.integration.ip.tcp.serializer.ByteArraySingleTerminatorSerializer;
-import org.springframework.integration.ip.tcp.serializer.ByteArrayStxEtxSerializer;
-import org.springframework.integration.ip.tcp.serializer.SoftEndOfStreamException;
-import org.springframework.integration.ip.util.TestingUtilities;
 import org.springframework.integration.test.util.TestUtils;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.SocketUtils;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Tests for TcpClient source.
  *
  * @author Ilayaperumal Gopinathan
+ * @author Gary Russell
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TcpClientTests.TcpClientApplication.class)
+@RunWith(SpringRunner.class)
 @DirtiesContext
-@WebIntegrationTest(randomPort = true, value = { "tcp.host = localhost", "tcp.port = ${tcp.client.test.port}" })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE,
+	properties = { "tcp.host = localhost", "tcp.port = ${tcp.client.test.port}" })
 public abstract class TcpClientTests {
 
 	@Autowired
@@ -111,7 +83,7 @@ public abstract class TcpClientTests {
 		serverSocket.close();
 	}
 
-	@IntegrationTest({ "tcp.host = foo", "tcp.decoder=LF", "tcp.bufferSize=1234", "tcp.nio = true",
+	@TestPropertySource(properties = { "tcp.host = foo", "tcp.decoder=LF", "tcp.bufferSize=1234", "tcp.nio = true",
 			"tcp.reverseLookup = true", "tcp.useDirectBuffers = true", "tcp.socketTimeout = 123", "tcp.charset = bar" })
 	public static class PropertiesPopulatedTests extends TcpClientTests {
 

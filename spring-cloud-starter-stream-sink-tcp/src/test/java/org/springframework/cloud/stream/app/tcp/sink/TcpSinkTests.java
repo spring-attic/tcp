@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,19 +32,17 @@ import java.util.concurrent.TimeUnit;
 
 import javax.net.ServerSocketFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
 import org.springframework.context.ApplicationContext;
@@ -63,17 +61,18 @@ import org.springframework.integration.test.util.TestUtils;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Tests for TcpSink.
  *
  * @author Gary Russell
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TcpSinkTests.TcpSinkApplication.class)
+@RunWith(SpringRunner.class)
 @DirtiesContext
-@WebIntegrationTest(randomPort = true, value = { "tcp.host = localhost", "tcp.port = ${tcp.sink.test.port}" })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE,
+	properties = { "tcp.host = localhost", "tcp.port = ${tcp.sink.test.port}" })
 public abstract class TcpSinkTests {
 
 	private static TestTCPServer server;
@@ -103,7 +102,7 @@ public abstract class TcpSinkTests {
 		server.shutDown();
 	}
 
-	@IntegrationTest({ "tcp.host = foo", "tcp.nio = true", "tcp.reverseLookup = true",
+	@TestPropertySource(properties = { "tcp.host = foo", "tcp.nio = true", "tcp.reverseLookup = true",
 					"tcp.useDirectBuffers = true", "tcp.socketTimeout = 123", "tcp.close = true", "tcp.charset = bar" })
 	public static class PropertiesPopulatedTests extends TcpSinkTests {
 
@@ -120,7 +119,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.host = foo" })
+	@TestPropertySource(properties = { "tcp.host = foo" })
 	public static class NotNioTests extends TcpSinkTests {
 
 		@Test
@@ -142,7 +141,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = LF" })
+	@TestPropertySource(properties = { "tcp.encoder = LF" })
 	public static class LFTests extends TcpSinkTests {
 
 		@Test
@@ -152,7 +151,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = NULL" })
+	@TestPropertySource(properties = { "tcp.encoder = NULL" })
 	public static class NULLTests extends TcpSinkTests {
 
 		@Test
@@ -162,7 +161,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = STXETX" })
+	@TestPropertySource(properties = { "tcp.encoder = STXETX" })
 	public static class STXETXTests extends TcpSinkTests {
 
 		@Test
@@ -172,7 +171,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = L1" })
+	@TestPropertySource(properties = { "tcp.encoder = L1" })
 	public static class L1Tests extends TcpSinkTests {
 
 		@Test
@@ -182,7 +181,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = L2" })
+	@TestPropertySource(properties = { "tcp.encoder = L2" })
 	public static class L2Tests extends TcpSinkTests {
 
 		@Test
@@ -192,7 +191,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = L4" })
+	@TestPropertySource(properties = { "tcp.encoder = L4" })
 	public static class L4Tests extends TcpSinkTests {
 
 		@Test
@@ -202,7 +201,7 @@ public abstract class TcpSinkTests {
 
 	}
 
-	@IntegrationTest({ "tcp.encoder = RAW", "tcp.close = true" })
+	@TestPropertySource(properties = { "tcp.encoder = RAW", "tcp.close = true" })
 	public static class RAWTests extends TcpSinkTests {
 
 		@Test

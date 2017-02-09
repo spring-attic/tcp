@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.springframework.cloud.stream.app.tcp.client.processor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.cloud.stream.test.matcher.MessageQueueMatcher.receivesPayloadThat;
@@ -27,40 +26,26 @@ import static org.springframework.cloud.stream.test.matcher.MessageQueueMatcher.
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 import javax.net.ServerSocketFactory;
-import javax.net.SocketFactory;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.cloud.stream.app.tcp.EncoderDecoderFactoryBean;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.cloud.stream.test.binder.MessageCollector;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
-import org.springframework.integration.ip.tcp.TcpOutboundGateway;
-import org.springframework.integration.ip.tcp.TcpReceivingChannelAdapter;
-import org.springframework.integration.ip.tcp.connection.AbstractClientConnectionFactory;
 import org.springframework.integration.ip.tcp.connection.AbstractConnectionFactory;
-import org.springframework.integration.ip.tcp.connection.AbstractServerConnectionFactory;
-import org.springframework.integration.ip.tcp.connection.TcpNetClientConnectionFactory;
-import org.springframework.integration.ip.tcp.connection.TcpNetServerConnectionFactory;
 import org.springframework.integration.ip.tcp.connection.TcpNioClientConnectionFactory;
 import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerializer;
 import org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer;
@@ -70,13 +55,12 @@ import org.springframework.integration.ip.tcp.serializer.ByteArrayRawSerializer;
 import org.springframework.integration.ip.tcp.serializer.ByteArraySingleTerminatorSerializer;
 import org.springframework.integration.ip.tcp.serializer.ByteArrayStxEtxSerializer;
 import org.springframework.integration.ip.tcp.serializer.SoftEndOfStreamException;
-import org.springframework.integration.ip.util.TestingUtilities;
 import org.springframework.integration.test.util.TestUtils;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.SocketUtils;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StringUtils;
 
 /**
@@ -85,10 +69,12 @@ import org.springframework.util.StringUtils;
  * @author Ilayaperumal Gopinathan
  * @author Gary Russell
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = TcpClientTests.TcpClientApplication.class)
+@RunWith(SpringRunner.class)
 @DirtiesContext
-@WebIntegrationTest(randomPort = true, value = { "tcp.host = localhost", "tcp.port = ${tcp.client.test.port}" })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE,
+	properties = {
+			"tcp.host = localhost",
+			"tcp.port = ${tcp.client.test.port}" })
 public abstract class TcpClientTests {
 
 	private static TestTCPServer server;
@@ -112,8 +98,9 @@ public abstract class TcpClientTests {
 		server.shutDown();
 	}
 
-	@IntegrationTest({ "tcp.host = foo", "tcp.decoder=LF", "tcp.encoder=NULL", "tcp.bufferSize=1234", "tcp.nio = true",
-			"tcp.reverseLookup = true", "tcp.useDirectBuffers = true", "tcp.socketTimeout = 123", "tcp.charset = bar" })
+	@TestPropertySource(properties = { "tcp.host = foo", "tcp.decoder=LF", "tcp.encoder=NULL", "tcp.bufferSize=1234",
+			"tcp.nio = true", "tcp.reverseLookup = true", "tcp.useDirectBuffers = true", "tcp.socketTimeout = 123",
+			"tcp.charset = bar" })
 	public static class PropertiesPopulatedTests extends TcpClientTests {
 
 		@Test
@@ -141,7 +128,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder= LF"})
+	@TestPropertySource(properties = { "tcp.decoder= LF" })
 	public static class LFTests extends TcpClientTests {
 
 		@Test
@@ -151,7 +138,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder = NULL" })
+	@TestPropertySource(properties = { "tcp.decoder = NULL" })
 	public static class NULLTests extends TcpClientTests {
 
 		@Test
@@ -161,7 +148,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder = STXETX" })
+	@TestPropertySource(properties = { "tcp.decoder = STXETX" })
 	public static class STXETXTests extends TcpClientTests {
 
 		@Test
@@ -171,7 +158,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder = L1" })
+	@TestPropertySource(properties = { "tcp.decoder = L1" })
 	public static class L1Tests extends TcpClientTests {
 
 		@Test
@@ -181,7 +168,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder = L2" })
+	@TestPropertySource(properties = { "tcp.decoder = L2" })
 	public static class L2Tests extends TcpClientTests {
 
 		@Test
@@ -191,7 +178,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder = L4" })
+	@TestPropertySource(properties = { "tcp.decoder = L4" })
 	public static class L4Tests extends TcpClientTests {
 
 		@Test
@@ -201,7 +188,7 @@ public abstract class TcpClientTests {
 
 	}
 
-	@IntegrationTest({ "tcp.decoder = RAW" })
+	@TestPropertySource(properties = { "tcp.decoder = RAW" })
 	public static class RAWTests extends TcpClientTests {
 
 		@Test
