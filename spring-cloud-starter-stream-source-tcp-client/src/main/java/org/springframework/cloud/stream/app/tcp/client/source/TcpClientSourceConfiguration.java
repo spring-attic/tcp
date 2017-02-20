@@ -40,9 +40,6 @@ import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerial
 public class TcpClientSourceConfiguration {
 
 	@Autowired
-	private Source source;
-
-	@Autowired
 	private TcpClientSourceProperties properties;
 
 	@Bean
@@ -52,7 +49,7 @@ public class TcpClientSourceConfiguration {
 		adapter.setConnectionFactory(connectionFactory);
 		adapter.setClientMode(true);
 		adapter.setRetryInterval(this.properties.getRetryInterval());
-		adapter.setOutputChannel(this.source.output());
+		adapter.setOutputChannelName(Source.OUTPUT);
 		return adapter;
 	}
 
