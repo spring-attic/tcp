@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Properties for the TCP Sink.
@@ -27,6 +28,7 @@ import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProp
  *
  */
 @ConfigurationProperties("tcp")
+@Validated
 public class TcpSinkProperties extends AbstractTcpConnectionFactoryProperties {
 
 	/**

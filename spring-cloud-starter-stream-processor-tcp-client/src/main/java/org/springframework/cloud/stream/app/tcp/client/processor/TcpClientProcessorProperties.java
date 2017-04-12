@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.cloud.stream.app.tcp.client.processor;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Properties for the TCP Client processor.
@@ -28,6 +30,7 @@ import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProp
  *
  */
 @ConfigurationProperties("tcp")
+@Validated
 public class TcpClientProcessorProperties extends AbstractTcpConnectionFactoryProperties {
 
 	/**
