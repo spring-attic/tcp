@@ -6,6 +6,28 @@ This module writes messages to TCP using an Encoder.
 TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of encoders are
 available, the default being 'CRLF'.
 
+== Input
+
+==== Headers:
+
+* `Content-Type: application/octet-stream` 
+
+==== Payload:
+
+* `byte[]`
+
+==== Headers:
+
+* `Content-Type: text/plain` 
+
+==== Payload:
+
+* `String`
+
+== Output
+
+N/A
+
 == Options
 
 The **$$tcp$$** $$sink$$ has the following options:
@@ -39,9 +61,19 @@ L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
 L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
 //end::ref-doc[]
-
 == Build
 
 ```
-$ mvn clean package
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+```
+You can find the corresponding binder based projects here. You can then cd into one one of the folders and build it:
+```
+$ ./mvnw clean package
+```
+
+== Examples
+
+```
+java -jar tcp_sink.jar --encoder=LF
 ```
