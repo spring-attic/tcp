@@ -1,6 +1,34 @@
 //tag::ref-doc[]
 = TCP Client as a processor which connects to a TCP server, sends data to it and also receives data.
 
+== Input
+
+==== Headers:
+
+* `Content-Type: application/octet-stream` 
+
+==== Payload:
+
+* `byte[]`
+
+==== Headers:
+
+* `Content-Type: text/plain` 
+
+==== Payload:
+
+* `String`
+
+== Output
+
+==== Headers:
+
+* `Content-Type: application/octet-stream`
+
+==== Payload:
+
+* `byte[]`
+
 == Options
 
 The **$$tcp-client$$** $$processor$$ has the following options:
@@ -20,9 +48,19 @@ $$tcp.use-direct-buffers$$:: $$<documentation missing>$$ *($$Boolean$$, default:
 //end::configuration-properties[]
 
 //end::ref-doc[]
-
 == Build
 
 ```
-$ mvn clean package
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+```
+You can find the corresponding binder based projects here. You can then cd into one one of the folders and build it:
+```
+$ ./mvnw clean package
+```
+
+== Examples
+
+```
+java -jar tcp-client-processor.jar --tcp.decoder=LF --tcp.encoder=LF
 ```
