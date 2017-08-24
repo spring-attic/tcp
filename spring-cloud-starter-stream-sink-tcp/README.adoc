@@ -75,5 +75,5 @@ $ ./mvnw clean package
 == Examples
 
 ```
-java -jar tcp_sink.jar --encoder=LF
+java -jar tcp_sink.jar --tcp.encoder=LF
 ```
