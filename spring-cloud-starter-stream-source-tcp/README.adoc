@@ -7,6 +7,20 @@ available, the default being 'CRLF' which is compatible with Telnet.
 
 Messages produced by the TCP source application have a `byte[]` payload.
 
+== Input
+
+N/A 
+
+== Output
+
+==== Headers:
+
+* `Content-Type: application/octet-stream`
+
+==== Payload:
+
+* `byte[]`
+
 == Options
 
 //tag::configuration-properties[]
@@ -39,7 +53,18 @@ L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 == Build
 
 ```
-$> mvn package
+$ ./mvnw clean install -PgenerateApps
+$ cd apps
+```
+You can find the corresponding binder based projects here. You can then cd into one one of the folders and build it:
+```
+$ ./mvnw clean package
+```
+
+== Examples
+
+```
+java -jar tcp_source.jar --decoder=LF
 ```
 
 The "decoder" property determines the message format (default is termination with CRLF).
