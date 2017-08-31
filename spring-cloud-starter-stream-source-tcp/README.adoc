@@ -49,7 +49,6 @@ L1:: data preceded by a one byte (unsigned) length field (supports up to 255 byt
 L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
 L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
-//end::ref-doc[]
 == Build
 
 ```
@@ -68,3 +67,4 @@ java -jar tcp_source.jar --tcp.decoder=LF
 ```
 
 The "decoder" property determines the message format (default is termination with CRLF).
+//end::ref-doc[]
