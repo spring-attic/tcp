@@ -32,8 +32,6 @@ $$tcp.socket-timeout$$:: $$<documentation missing>$$ *($$Integer$$, default: `$$
 $$tcp.use-direct-buffers$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
 //end::configuration-properties[]
 
-//end::ref-doc[]
-
 == Build
 
 ```
@@ -50,3 +48,4 @@ $ ./mvnw clean package
 ```
 java -jar tcp_client_source.jar --tcp.decoder=LF
 ```
+//end::ref-doc[]
