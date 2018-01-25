@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.app.tcp.EncoderDecoderFactoryBean;
+import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties;
 import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -38,7 +39,7 @@ import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerial
  * @author Gary Russell
  */
 @EnableBinding(Processor.class)
-@EnableConfigurationProperties(TcpClientProcessorProperties.class)
+@EnableConfigurationProperties({TcpClientProcessorProperties.class, TcpConnectionFactoryProperties.class})
 public class TcpClientProcessorConfiguration {
 
 	@Autowired
@@ -46,6 +47,9 @@ public class TcpClientProcessorConfiguration {
 
 	@Autowired
 	private TcpClientProcessorProperties properties;
+
+	@Autowired
+	private TcpConnectionFactoryProperties tcpConnectionProperties;
 
 	@Bean
 	public TcpReceivingChannelAdapter adapter(
@@ -75,13 +79,13 @@ public class TcpClientProcessorConfiguration {
 		TcpConnectionFactoryFactoryBean factoryBean = new TcpConnectionFactoryFactoryBean();
 		factoryBean.setType("client");
 		factoryBean.setHost(this.properties.getHost());
-		factoryBean.setPort(this.properties.getPort());
-		factoryBean.setUsingNio(this.properties.isNio());
-		factoryBean.setUsingDirectBuffers(this.properties.isUseDirectBuffers());
-		factoryBean.setLookupHost(this.properties.isReverseLookup());
+		factoryBean.setPort(this.tcpConnectionProperties.getPort());
+		factoryBean.setUsingNio(this.tcpConnectionProperties.isNio());
+		factoryBean.setUsingDirectBuffers(this.tcpConnectionProperties.isUseDirectBuffers());
+		factoryBean.setLookupHost(this.tcpConnectionProperties.isReverseLookup());
 		factoryBean.setSerializer(encoder);
 		factoryBean.setDeserializer(decoder);
-		factoryBean.setSoTimeout(this.properties.getSocketTimeout());
+		factoryBean.setSoTimeout(this.tcpConnectionProperties.getSocketTimeout());
 		factoryBean.setMapper(mapper);
 		factoryBean.setSingleUse(Boolean.FALSE);
 		return factoryBean;

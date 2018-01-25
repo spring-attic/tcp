@@ -18,7 +18,7 @@ package org.springframework.cloud.stream.app.tcp.sink;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties;
+import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -29,7 +29,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @ConfigurationProperties("tcp")
 @Validated
-public class TcpSinkProperties extends AbstractTcpConnectionFactoryProperties {
+public class TcpSinkProperties {
 
 	/**
 	 * The host to which this sink will connect.
@@ -39,7 +39,7 @@ public class TcpSinkProperties extends AbstractTcpConnectionFactoryProperties {
 	/**
 	 * The encoder to use when sending messages.
 	 */
-	private Encoding encoder = Encoding.CRLF;
+	private TcpConnectionFactoryProperties.Encoding encoder = TcpConnectionFactoryProperties.Encoding.CRLF;
 
 	/**
 	 * The charset used when converting from bytes to String.
@@ -61,11 +61,11 @@ public class TcpSinkProperties extends AbstractTcpConnectionFactoryProperties {
 	}
 
 	@NotNull
-	public Encoding getEncoder() {
+	public TcpConnectionFactoryProperties.Encoding getEncoder() {
 		return this.encoder;
 	}
 
-	public void setEncoder(Encoding encoder) {
+	public void setEncoder(TcpConnectionFactoryProperties.Encoding encoder) {
 		this.encoder = encoder;
 	}
 

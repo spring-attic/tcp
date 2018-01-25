@@ -24,12 +24,13 @@ $$tcp.buffer-size$$:: $$The buffer size used when decoding messages; larger mess
 $$tcp.charset$$:: $$The charset used when converting from bytes to String.$$ *($$String$$, default: `$$UTF-8$$`)*
 $$tcp.decoder$$:: $$The decoder to use when receiving messages.$$ *($$Encoding$$, default: `$$<none>$$`, possible values: `CRLF`,`LF`,`NULL`,`STXETX`,`RAW`,`L1`,`L2`,`L4`)*
 $$tcp.host$$:: $$The host to which this client will connect.$$ *($$String$$, default: `$$localhost$$`)*
-$$tcp.nio$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
-$$tcp.port$$:: $$<documentation missing>$$ *($$Integer$$, default: `$$<none>$$`)*
+$$tcp.nio$$:: $$Whether or not to use NIO.$$ *($$Boolean$$, default: `$$false$$`)*
+$$tcp.port$$:: $$The port on which to listen; 0 for the OS to choose a port.$$ *($$Integer$$, default: `$$1234$$`)*
 $$tcp.retry-interval$$:: $$Retry interval (in milliseconds) to check the connection and reconnect.$$ *($$Long$$, default: `$$60000$$`)*
-$$tcp.reverse-lookup$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
-$$tcp.socket-timeout$$:: $$<documentation missing>$$ *($$Integer$$, default: `$$<none>$$`)*
-$$tcp.use-direct-buffers$$:: $$<documentation missing>$$ *($$Boolean$$, default: `$$<none>$$`)*
+$$tcp.reverse-lookup$$:: $$Perform a reverse DNS lookup on the remote IP Address; if false,
+ just the IP address is included in the message headers.$$ *($$Boolean$$, default: `$$false$$`)*
+$$tcp.socket-timeout$$:: $$The timeout (ms) before closing the socket when no data is received.$$ *($$Integer$$, default: `$$120000$$`)*
+$$tcp.use-direct-buffers$$:: $$Whether or not to use direct buffers.$$ *($$Boolean$$, default: `$$false$$`)*
 //end::configuration-properties[]
 
 == Build

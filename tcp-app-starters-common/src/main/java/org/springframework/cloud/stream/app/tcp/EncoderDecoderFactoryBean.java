@@ -16,7 +16,7 @@
 package org.springframework.cloud.stream.app.tcp;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties.Encoding;
+import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties.Encoding;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerializer;
