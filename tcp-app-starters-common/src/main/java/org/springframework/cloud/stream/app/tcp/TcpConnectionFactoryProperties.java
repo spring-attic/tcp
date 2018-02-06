@@ -26,11 +26,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author Christian Tzolov
  */
 @ConfigurationProperties("tcp")
-final public class TcpConnectionFactoryProperties {
-
-	public enum Encoding {
-		CRLF, LF, NULL, STXETX, RAW, L1, L2, L4;
-	}
+public final class TcpConnectionFactoryProperties {
 
 	/**
 	 * The port on which to listen; 0 for the OS to choose a port.

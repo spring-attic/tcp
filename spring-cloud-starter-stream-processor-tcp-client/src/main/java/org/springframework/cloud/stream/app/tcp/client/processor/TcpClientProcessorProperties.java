@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 the original author or authors.
+ * Copyright 2016-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package org.springframework.cloud.stream.app.tcp.client.processor;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties;
+import org.springframework.cloud.stream.app.tcp.Encoding;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -27,6 +27,7 @@ import org.springframework.validation.annotation.Validated;
  *
  * @author Ilayaperumal Gopinathan
  * @author Gary Russell
+ * @author Christian Tzolov
  *
  */
 @ConfigurationProperties("tcp")
@@ -36,7 +37,7 @@ public class TcpClientProcessorProperties {
 	/**
 	 * The decoder to use when receiving messages.
 	 */
-	private TcpConnectionFactoryProperties.Encoding decoder = TcpConnectionFactoryProperties.Encoding.CRLF;
+	private Encoding decoder = Encoding.CRLF;
 
 	/**
 	 * The buffer size used when decoding messages; larger messages will be rejected.
@@ -51,7 +52,7 @@ public class TcpClientProcessorProperties {
 	/**
 	 * The encoder to use when sending messages.
 	 */
-	private TcpConnectionFactoryProperties.Encoding encoder = TcpConnectionFactoryProperties.Encoding.CRLF;
+	private Encoding encoder = Encoding.CRLF;
 
 	/**
 	 * The charset used when converting from bytes to String.
@@ -64,11 +65,11 @@ public class TcpClientProcessorProperties {
 	private long retryInterval = 60000;
 
 	@NotNull
-	public TcpConnectionFactoryProperties.Encoding getDecoder() {
+	public Encoding getDecoder() {
 		return this.decoder;
 	}
 
-	public void setDecoder(TcpConnectionFactoryProperties.Encoding decoder) {
+	public void setDecoder(Encoding decoder) {
 		this.decoder = decoder;
 	}
 
@@ -90,11 +91,11 @@ public class TcpClientProcessorProperties {
 	}
 
 	@NotNull
-	public TcpConnectionFactoryProperties.Encoding getEncoder() {
+	public Encoding getEncoder() {
 		return this.encoder;
 	}
 
-	public void setEncoder(TcpConnectionFactoryProperties.Encoding encoder) {
+	public void setEncoder(Encoding encoder) {
 		this.encoder = encoder;
 	}
 

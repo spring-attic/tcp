@@ -19,7 +19,7 @@ package org.springframework.cloud.stream.app.tcp.client.source;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties;
+import org.springframework.cloud.stream.app.tcp.Encoding;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -40,7 +40,7 @@ public class TcpClientSourceProperties {
 	/**
 	 * The decoder to use when receiving messages.
 	 */
-	private TcpConnectionFactoryProperties.Encoding decoder = TcpConnectionFactoryProperties.Encoding.CRLF;
+	private Encoding decoder = Encoding.CRLF;
 
 	/**
 	 * The buffer size used when decoding messages; larger messages will be rejected.
@@ -67,11 +67,11 @@ public class TcpClientSourceProperties {
 	}
 
 	@NotNull
-	public TcpConnectionFactoryProperties.Encoding getDecoder() {
+	public Encoding getDecoder() {
 		return this.decoder;
 	}
 
-	public void setDecoder(TcpConnectionFactoryProperties.Encoding decoder) {
+	public void setDecoder(Encoding decoder) {
 		this.decoder = decoder;
 	}
 
