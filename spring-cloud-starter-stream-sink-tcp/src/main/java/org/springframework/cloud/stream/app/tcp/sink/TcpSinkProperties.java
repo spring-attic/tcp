@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,18 +18,19 @@ package org.springframework.cloud.stream.app.tcp.sink;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties;
+import org.springframework.cloud.stream.app.tcp.Encoding;
 import org.springframework.validation.annotation.Validated;
 
 /**
  * Properties for the TCP Sink.
  *
  * @author Gary Russell
+ * @author Christian Tzolov
  *
  */
 @ConfigurationProperties("tcp")
 @Validated
-public class TcpSinkProperties extends AbstractTcpConnectionFactoryProperties {
+public class TcpSinkProperties {
 
 	/**
 	 * The host to which this sink will connect.

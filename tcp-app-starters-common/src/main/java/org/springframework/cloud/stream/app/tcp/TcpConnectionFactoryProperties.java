@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 the original author or authors.
+ * Copyright 2015-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,17 @@
 
 package org.springframework.cloud.stream.app.tcp;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 /**
  * Base class for TCP connection factory properties.
  *
  * @author Eric Bottard
  * @author Gary Russell
+ * @author Christian Tzolov
  */
-public abstract class AbstractTcpConnectionFactoryProperties {
-
-	public enum Encoding {
-		CRLF, LF, NULL, STXETX, RAW, L1, L2, L4;
-	}
+@ConfigurationProperties("tcp")
+public final class TcpConnectionFactoryProperties {
 
 	/**
 	 * The port on which to listen; 0 for the OS to choose a port.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 the original author or authors.
+ * Copyright 2015-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package org.springframework.cloud.stream.app.tcp;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties.Encoding;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerializer;
@@ -33,6 +32,7 @@ import org.springframework.util.Assert;
  * {@link Encoding}.
  *
  * @author Gary Russell
+ * @author Christian Tzolov
  */
 public class EncoderDecoderFactoryBean extends AbstractFactoryBean<AbstractByteArraySerializer>
 		implements ApplicationEventPublisherAware {

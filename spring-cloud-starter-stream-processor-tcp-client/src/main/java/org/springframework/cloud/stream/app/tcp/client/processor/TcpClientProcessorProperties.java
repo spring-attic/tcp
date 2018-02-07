@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 the original author or authors.
+ * Copyright 2016-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package org.springframework.cloud.stream.app.tcp.client.processor;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.stream.app.tcp.AbstractTcpConnectionFactoryProperties;
+import org.springframework.cloud.stream.app.tcp.Encoding;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -27,11 +27,12 @@ import org.springframework.validation.annotation.Validated;
  *
  * @author Ilayaperumal Gopinathan
  * @author Gary Russell
+ * @author Christian Tzolov
  *
  */
 @ConfigurationProperties("tcp")
 @Validated
-public class TcpClientProcessorProperties extends AbstractTcpConnectionFactoryProperties {
+public class TcpClientProcessorProperties {
 
 	/**
 	 * The decoder to use when receiving messages.

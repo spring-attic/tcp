@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2017 the original author or authors.
+ * Copyright 2015-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.app.tcp.EncoderDecoderFactoryBean;
+import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -34,13 +35,17 @@ import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerial
  * A sink application that sends data over TCP.
  *
  * @author Gary Russell
+ * @author Christian Tzolov
  */
 @EnableBinding(Sink.class)
-@EnableConfigurationProperties(TcpSinkProperties.class)
+@EnableConfigurationProperties({TcpSinkProperties.class, TcpConnectionFactoryProperties.class})
 public class TcpSinkConfiguration {
 
 	@Autowired
 	private TcpSinkProperties properties;
+
+	@Autowired
+	private TcpConnectionFactoryProperties tcpConnectionProperties;
 
 	@Bean
 	@ServiceActivator(inputChannel = Sink.INPUT)
@@ -58,12 +63,12 @@ public class TcpSinkConfiguration {
 		TcpConnectionFactoryFactoryBean factoryBean = new TcpConnectionFactoryFactoryBean();
 		factoryBean.setType("client");
 		factoryBean.setHost(this.properties.getHost());
-		factoryBean.setPort(this.properties.getPort());
-		factoryBean.setUsingNio(this.properties.isNio());
-		factoryBean.setUsingDirectBuffers(this.properties.isUseDirectBuffers());
-		factoryBean.setLookupHost(this.properties.isReverseLookup());
+		factoryBean.setPort(this.tcpConnectionProperties.getPort());
+		factoryBean.setUsingNio(this.tcpConnectionProperties.isNio());
+		factoryBean.setUsingDirectBuffers(this.tcpConnectionProperties.isUseDirectBuffers());
+		factoryBean.setLookupHost(this.tcpConnectionProperties.isReverseLookup());
 		factoryBean.setSerializer(encoder);
-		factoryBean.setSoTimeout(this.properties.getSocketTimeout());
+		factoryBean.setSoTimeout(this.tcpConnectionProperties.getSocketTimeout());
 		factoryBean.setMapper(mapper);
 		factoryBean.setSingleUse(this.properties.isClose());
 		return factoryBean;

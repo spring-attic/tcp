@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2017 the original author or authors.
+ * Copyright 2015-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.app.tcp.TcpConnectionFactoryProperties;
 import org.springframework.cloud.stream.app.tcp.EncoderDecoderFactoryBean;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
@@ -32,13 +33,17 @@ import org.springframework.integration.ip.tcp.serializer.AbstractByteArraySerial
  * A source module that receives data over TCP.
  *
  * @author Gary Russell
+ * @author Christian Tzolov
  */
 @EnableBinding(Source.class)
-@EnableConfigurationProperties(TcpSourceProperties.class)
+@EnableConfigurationProperties({TcpSourceProperties.class, TcpConnectionFactoryProperties.class})
 public class TcpSourceConfiguration {
 
 	@Autowired
 	private TcpSourceProperties properties;
+
+	@Autowired
+	private TcpConnectionFactoryProperties tcpConnectionProperties;
 
 	@Bean
 	public TcpReceivingChannelAdapter adapter(
@@ -54,12 +59,12 @@ public class TcpSourceConfiguration {
 			@Qualifier("tcpSourceDecoder") AbstractByteArraySerializer decoder) throws Exception {
 		TcpConnectionFactoryFactoryBean factoryBean = new TcpConnectionFactoryFactoryBean();
 		factoryBean.setType("server");
-		factoryBean.setPort(this.properties.getPort());
-		factoryBean.setUsingNio(this.properties.isNio());
-		factoryBean.setUsingDirectBuffers(this.properties.isUseDirectBuffers());
-		factoryBean.setLookupHost(this.properties.isReverseLookup());
+		factoryBean.setPort(this.tcpConnectionProperties.getPort());
+		factoryBean.setUsingNio(this.tcpConnectionProperties.isNio());
+		factoryBean.setUsingDirectBuffers(this.tcpConnectionProperties.isUseDirectBuffers());
+		factoryBean.setLookupHost(this.tcpConnectionProperties.isReverseLookup());
 		factoryBean.setDeserializer(decoder);
-		factoryBean.setSoTimeout(this.properties.getSocketTimeout());
+		factoryBean.setSoTimeout(this.tcpConnectionProperties.getSocketTimeout());
 		return factoryBean;
 	}
 
