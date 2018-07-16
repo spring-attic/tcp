@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.cloud.stream.app</groupId>
 	<artifactId>tcp-app-dependencies</artifactId>
-	<version>2.0.1.RELEASE</version>
+	<version>2.0.2.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>tcp-app-dependencies</name>
 	<description>Spring Cloud Stream TCP App Dependencies</description>
@@ -20,27 +20,27 @@
 			<dependency>
 				<groupId>org.springframework.cloud.stream.app</groupId>
 				<artifactId>spring-cloud-starter-stream-source-tcp</artifactId>
-				<version>2.0.1.RELEASE</version>
+				<version>2.0.2.BUILD-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud.stream.app</groupId>
 				<artifactId>spring-cloud-starter-stream-sink-tcp</artifactId>
-				<version>2.0.1.RELEASE</version>
+				<version>2.0.2.BUILD-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud.stream.app</groupId>
 				<artifactId>spring-cloud-starter-stream-source-tcp-client</artifactId>
-				<version>2.0.1.RELEASE</version>
+				<version>2.0.2.BUILD-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud.stream.app</groupId>
 				<artifactId>spring-cloud-starter-stream-processor-tcp-client</artifactId>
-				<version>2.0.1.RELEASE</version>
+				<version>2.0.2.BUILD-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud.stream.app</groupId>
 				<artifactId>tcp-app-starters-test-support</artifactId>
-				<version>2.0.1.RELEASE</version>
+				<version>2.0.2.BUILD-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
