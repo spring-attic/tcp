@@ -52,6 +52,7 @@
 					<generatedApps>
 						<tcp-client-processor />
 					</generatedApps>
+					<enableContainerImageMetadata>true</enableContainerImageMetadata>
 				</configuration>
 			</plugin>
 		</plugins>
